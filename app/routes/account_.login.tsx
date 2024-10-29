@@ -11,7 +11,7 @@ type ActionResponse = {
 };
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Login'}];
+  return [{title: 'CodersBrew | Login'}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {
@@ -68,9 +68,10 @@ export default function Login() {
   const error = data?.error || null;
 
   return (
-    <div className="login">
+    <div className=' grid place-content-center'>
+      <div className="login border-4 rounded border-[var(--theme-base-color)] m-4 p-5 text-center">
       <h1>Sign in.</h1>
-      <Form method="POST">
+      <Form method="POST" className='text-left'>
         <fieldset>
           <label htmlFor="email">Email address</label>
           <input
@@ -105,7 +106,7 @@ export default function Login() {
         ) : (
           <br />
         )}
-        <button type="submit">Sign in</button>
+        <button className='w-full text-center p-2 bg-[var(--theme-base-color)] text-[var(--theme-accent-color)] rounded ' type="submit">Sign in</button>
       </Form>
       <br />
       <div>
@@ -116,6 +117,7 @@ export default function Login() {
           <Link to="/account/register">Register →</Link>
         </p>
       </div>
+    </div>
     </div>
   );
 }

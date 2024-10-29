@@ -134,9 +134,9 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink className="md:hidden block" prefetch="intent" to="/" style={activeLinkStyle} end>
+      {/* <NavLink className="md:hidden block" prefetch="intent" to="/" style={activeLinkStyle} end>
         <img src={LogoAsset} className=' w-40 ' alt={shop.name} srcSet="" />
-      </NavLink>
+      </NavLink> */}
       <div className='flex flex-row items-center justify-center gap-x-4 '>
         <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
           <Suspense fallback="Sign in">

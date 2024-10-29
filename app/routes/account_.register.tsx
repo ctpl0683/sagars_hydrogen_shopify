@@ -4,7 +4,7 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Form, Link, useActionData} from '@remix-run/react';
+import {Form, Link, type MetaFunction, useActionData} from '@remix-run/react';
 import type {CustomerCreateMutation} from 'storefrontapi.generated';
 
 type ActionResponse = {
@@ -12,6 +12,10 @@ type ActionResponse = {
   newCustomer:
     | NonNullable<CustomerCreateMutation['customerCreate']>['customer']
     | null;
+};
+
+export const meta: MetaFunction = () => {
+  return [{title: 'CodersBrew | Sign Up'}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {
@@ -106,9 +110,10 @@ export default function Register() {
   const data = useActionData<ActionResponse>();
   const error = data?.error || null;
   return (
-    <div className="login">
+    <div className=' grid place-content-center'>
+      <div className="login border-4 rounded border-[var(--theme-base-color)] m-4 p-5 text-center">
       <h1>Register.</h1>
-      <Form method="POST">
+      <Form method="POST" className='text-left'>
         <fieldset>
           <label htmlFor="email">Email address</label>
           <input
@@ -154,13 +159,15 @@ export default function Register() {
         ) : (
           <br />
         )}
-        <button type="submit">Register</button>
+        <button className='w-full text-center p-2 bg-[var(--theme-base-color)] text-[var(--theme-accent-color)] rounded ' type="submit">Register</button>
       </Form>
       <br />
       <p>
         <Link to="/account/login">Login →</Link>
       </p>
     </div>
+    </div>
+    
   );
 }
 

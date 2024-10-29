@@ -36,7 +36,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
+    <div className=' grid place-content-center font-bold bg-[var(--theme-base-color)] text-[var(--theme-accent-color)] hover:text-[var(--theme-base-color)] hover:bg-[var(--theme-accent-color)] p-3 rounded-2xl cursor-pointer'>
       <a href={checkoutUrl} target="_self">
         <p>Continue to Checkout &rarr;</p>
       </a>

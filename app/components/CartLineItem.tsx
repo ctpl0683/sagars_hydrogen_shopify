@@ -6,6 +6,7 @@ import {Link} from '@remix-run/react';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import { MinusCircle, PlusCircle, Trash } from 'lucide-react';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -64,6 +65,10 @@ export function CartLineItem({
         </ul>
         <CartLineQuantity line={line} />
       </div>
+      {
+        !(!line || typeof line?.quantity === 'undefined') &&
+        <CartLineRemoveButton lineIds={[line?.id]} disabled={!!line?.isOptimistic} />
+      }
     </li>
   );
 }
@@ -81,7 +86,7 @@ function CartLineQuantity({line}: {line: CartLine}) {
 
   return (
     <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+      <small>Quantity:&nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
@@ -89,10 +94,10 @@ function CartLineQuantity({line}: {line: CartLine}) {
           name="decrease-quantity"
           value={prevQuantity}
         >
-          <span>&#8722; </span>
+          <PlusCircle/>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
+      <p>{quantity}</p>
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           aria-label="Increase quantity"
@@ -100,11 +105,9 @@ function CartLineQuantity({line}: {line: CartLine}) {
           value={nextQuantity}
           disabled={!!isOptimistic}
         >
-          <span>&#43;</span>
+          <MinusCircle/>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
     </div>
   );
 }
@@ -127,8 +130,8 @@ function CartLineRemoveButton({
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
-        Remove
+      <button disabled={disabled} type="submit" className=' grid place-content-center w-8 h-full bg-red-500'>
+        <Trash/>
       </button>
     </CartForm>
   );
