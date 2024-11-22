@@ -8,4 +8,7 @@
 :root{
     --theme-base-color: #BC5307;
     --theme-accent-color: #FAED7F;
+    --theme-purple-color: #160C28;
+    --theme-black-color: #000411;
+    --theme-azure-color: #3185FC;
 }

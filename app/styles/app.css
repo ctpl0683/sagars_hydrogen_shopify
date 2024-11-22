@@ -3,13 +3,23 @@
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
-  --header-height: 64px;
+  --header-height: 80px;
   --color-dark: #000;
   --color-light: #fff;
   --theme-base-color: #BC5307;
-  --theme-accent-color: #FAED7F;
-}
+  --theme-accent-color: #faed7f;
+  --theme-purple-color: #160C28;
+  --theme-black-color: #000411;
+  --theme-azure-color: #3185FC;
 
+}
+/* <palette>
+  <color name="Burnt orange" hex="bc5307" r="188" g="83" b="7" />
+  <color name="Dark purple" hex="160c28" r="22" g="12" b="40" />
+  <color name="Rich black" hex="000411" r="0" g="4" b="17" />
+  <color name="Maize" hex="faed7f" r="250" g="237" b="127" />
+  <color name="Azure" hex="3185fc" r="49" g="133" b="252" />
+</palette> */
 img {
   border-radius: 4px;
 }
@@ -162,11 +172,11 @@ button.reset:hover:not(:has(> *)) {
   align-items: center;
   justify-content: center;
   height: var(--header-height);
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   position: sticky;
   top: 0;
   z-index: 1;
-  padding-block: 4%;
+  padding-block: 1%;
   @media (max-width: 767px) {
     flex-direction: row;
   }
@@ -227,7 +237,7 @@ button.reset:hover:not(:has(> *)) {
 * components/Footer
 * --------------------------------------------------
 */
-.footer {
+/* .footer {
   background: var(--color-dark);
   margin-top: auto;
 }
@@ -241,8 +251,15 @@ button.reset:hover:not(:has(> *)) {
 
 .footer-menu a {
   color: var(--color-light);
+} */
+.footer-icon div{
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 1rem;
 }
-
 /*
 * --------------------------------------------------
 * components/Cart
@@ -360,6 +377,10 @@ button.reset:hover:not(:has(> *)) {
   margin-bottom: 2rem;
   position: relative;
 }
+.featured-collection-div {
+  display: block;
+  position: relative;
+}
 
 .featured-collection-image {
   aspect-ratio: 1 / 1;
@@ -368,7 +389,7 @@ button.reset:hover:not(:has(> *)) {
   }
 }
 
-.featured-collection img {
+.featured-collection img, .featured-collection-div img {
   height: auto;
   max-height: 100%;
   object-fit: cover;
@@ -411,16 +432,16 @@ button.reset:hover:not(:has(> *)) {
 .collection-description {
   margin-bottom: 1rem;
   max-width: 95%;
-  @media (min-width: 45em) {
+  /* @media (min-width: 45em) {
     max-width: 600px;
-  }
+  } */
 }
 
 .products-grid {
   display: grid;
   grid-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block: 2rem;
 }
 
 .product-item img {

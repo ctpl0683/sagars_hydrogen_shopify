@@ -16,7 +16,7 @@ interface HeaderProps {
   /**********   EXAMPLE UPDATE END   ************/
   /***********************************************/
   publicStoreDomain: string;
-  shop: any
+  shop?: any
 }
 
 type Viewport = 'desktop' | 'mobile';
@@ -30,14 +30,16 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <img src={LogoAsset} className=' w-60 ' alt={shop.name} srcSet="" />
-      </NavLink>
       <HeaderMenu
         menu={menu}
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
+        headerLogo={
+          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+            <img src={LogoAsset} className=' w-60 ' alt={shop.name} srcSet="" />
+          </NavLink>
+        }
       />
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} shop={shop} />
     </header>
@@ -49,11 +51,13 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
+  headerLogo
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
+  headerLogo?: any
 }) {
   const className = `header-menu-${viewport}`;
 
@@ -77,7 +81,7 @@ export function HeaderMenu({
           <Home/>
         </NavLink>
       )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+      {(menu || FALLBACK_HEADER_MENU).items.map((item, k) => {
         if (!item.url) return null;
 
         // if the url is internal, we strip the domain
@@ -88,7 +92,8 @@ export function HeaderMenu({
             ? new URL(item.url).pathname
             : item.url;
         return (
-          <NavLink
+          <>
+            <NavLink
             className="header-menu-item relative group"
             end
             key={item.id}
@@ -120,6 +125,11 @@ export function HeaderMenu({
               </>
             }
           </NavLink>
+          {
+            (menu || FALLBACK_HEADER_MENU)?.items?.length/2 === k+1 &&
+            headerLogo
+          }
+          </>
         );
       })}
     </nav>
@@ -170,7 +180,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
+    <button onClick={() => open('search')}>
       <Search/>
     </button>
   );

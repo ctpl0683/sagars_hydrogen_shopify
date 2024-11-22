@@ -74,9 +74,11 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
+    <div className="collection mx-32">
+      <div className='grid place-content-center w-full'>
+      <div className='w-full text-center py-10 text-3xl font-bold'>{collection.title}</div>
+      <p className="collection-description w-full text-center">{collection.description}</p>
+      </div>
       <PaginatedResourceSection
         connection={collection.products}
         resourcesClassName="products-grid"

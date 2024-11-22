@@ -6,7 +6,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
 export const meta: MetaFunction<typeof loader> = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [{title: `CodersBrew | Shop`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -51,8 +51,8 @@ export default function Collection() {
   const {products} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>Products</h1>
+    <div className="collection mx-32">
+      <div className='w-full text-center py-10 text-3xl font-bold'>All Products</div>
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -80,7 +80,7 @@ function ProductItem({
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item"
+      className="flex flex-col justify-between w-60"
       key={product.id}
       prefetch="intent"
       to={variantUrl}

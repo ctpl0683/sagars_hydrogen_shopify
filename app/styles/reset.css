@@ -15,6 +15,7 @@ body {
   font-optical-sizing: auto;
   margin: 0;
   padding: 0;
+  background-color: whitesmoke;
 }
 
 h1,
@@ -79,10 +80,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
+/* 
 body > main {
   margin: 0 1rem 1rem 1rem;
-}
+} */
 
 section {
   padding: 1rem 0;

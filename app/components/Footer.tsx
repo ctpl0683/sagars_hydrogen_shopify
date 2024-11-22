@@ -1,6 +1,10 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
+import LogoAsset from '~/assets/YellowFullLogo.png'
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import Instagram from '~/assets/icons8-instagram.svg'
+import Facebook from '~/assets/icons8-facebook.svg'
+import Twitter from '~/assets/icons8-twitter.svg'
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -42,8 +46,12 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
+    <nav className="footer-menu bg-[var(--theme-black-color)] h-[30vh] flex w-full flex-row flex-wrap items-start justify-between pt-16 px-28" role="navigation">
+      <div>
+        <img src={LogoAsset} alt="Logo" srcSet="" className='w-60' />
+      </div>
+      <div className='grid md:grid-cols-2 md:gap-4'>
+      {(FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
         const url =
@@ -69,6 +77,18 @@ function FooterMenu({
           </NavLink>
         );
       })}
+      </div>
+      <div className='flex flex-col items-end justify-items-start text-white'>
+        <div className='flex flex-row items-center justify-between footer-icon'>
+          <div><img src={Twitter} alt="twitter" srcSet="" /></div>
+          <div><img src={Facebook} alt="facebook" srcSet="" /></div>
+          <div><img src={Instagram} alt="instagram" srcSet="" /></div>
+        </div>
+        {/* <div className='w-full border-b-white my-2'>
+          <div>Email</div>
+          <div>Subscribe</div>
+        </div> */}
+      </div>
     </nav>
   );
 }

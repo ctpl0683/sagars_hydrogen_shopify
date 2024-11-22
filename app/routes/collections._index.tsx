@@ -46,8 +46,8 @@ export default function Collections() {
   const {collections} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections">
-      <h1>Collections</h1>
+    <div className="collection mx-32">
+      <div className='w-full text-center py-10 text-3xl font-bold'>Collections</div>
       <PaginatedResourceSection
         connection={collections}
         resourcesClassName="collections-grid"
@@ -73,7 +73,7 @@ function CollectionItem({
 }) {
   return (
     <Link
-      className="collection-item"
+      className="flex flex-col justify-between w-60"
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
