@@ -5,6 +5,7 @@ import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
 import Instagram from '~/assets/icons8-instagram.svg'
 import Facebook from '~/assets/icons8-facebook.svg'
 import Twitter from '~/assets/icons8-twitter.svg'
+import coffeebeanRain from '~/assets/BannerAssets/coffeebeanrain2.png'
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -46,7 +47,7 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu bg-[var(--theme-black-color)] h-[30vh] flex w-full flex-row flex-wrap items-start justify-between pt-16 px-28" role="navigation">
+    <nav className="footer-menu bg-[var(--theme-black-color)] h-[30vh] flex w-full flex-row flex-wrap items-start justify-between pt-16 px-28 relative" role="navigation">
       <div>
         <img src={LogoAsset} alt="Logo" srcSet="" className='w-60' />
       </div>
@@ -88,6 +89,9 @@ function FooterMenu({
           <div>Email</div>
           <div>Subscribe</div>
         </div> */}
+      </div>
+      <div className=' absolute w-full left-0 bottom-0'>
+        <img src={coffeebeanRain} alt="" className='w-full h-full'/>
       </div>
     </nav>
   );

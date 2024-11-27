@@ -6,6 +6,9 @@ import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
+import fingersHoldingBean from '~/assets/BannerAssets/fingers_coffee_bean.png'
+import whyCB from '~/assets/BannerAssets/whyCB.png'
+import cbLogo from '~/assets/LettersLogo.png'
 
 export const meta: MetaFunction = () => {
   return [{title: 'CodersBrew'}];
@@ -59,14 +62,17 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
-      <div className=' bg-[var(--theme-base-color)] h-96 w-full grid place-content-center'>
+      <div className=' bg-[var(--theme-base-color)] h-[40rem] w-full grid place-content-center relative'>
         <div className=' flex flex-col items-start justify-start w-[80vw] h-full'>
           <div className=' flex flex-col items-start justify-items-start'>
-            <div className=' text-5xl font-extrabold text-white'>Sip into the Season, <br/>One Brew at a Time</div>
-            <div className=' md:max-w-96 text-xl mt-3 text-white'>
+            <div className=' text-7xl font-extrabold text-white'>Sip into the Season, <br/>One Brew at a Time</div>
+            <div className=' md:max-w-[45rem] text-xl mt-3 text-white'>
               Embrace autumn with rich, aromatic blends that warm the soul—perfect for cozy mornings, sharing with friends, and savoring the crisp days of fall.
             </div>
           </div>
+        </div>
+        <div className=' absolute bottom-0 right-0 h-full'>
+          <img src={fingersHoldingBean} className='h-full w-full'/>
         </div>
       </div>
       <FeaturedCollections collection={data.featuredCollection} />
@@ -77,7 +83,9 @@ export default function Homepage() {
           At CodersBrew, we’re committed to crafting the perfect coffee experience with every sip. Our coffee powders are made from handpicked, premium beans blended with unique flavors like Hazelnut, Vanilla, and Caramel, giving each cup a smooth, rich taste that’s both bold and nuanced. We focus on quality at every stage, from sourcing to roasting, ensuring each blend is fresh, aromatic, and packed with flavor. Whether you’re starting your day or winding down, CodersBrew brings you the best in coffee so you can enjoy barista-quality taste right at home.
           </div>
         </div>
-        <div></div>
+        <div className=' h-96'>
+          <img src={whyCB} alt="" className='w-full h-full' />
+        </div>
       </div>
       <RecommendedProducts products={data.recommendedProducts} />
       <div className=' w-full flex flex-row-reverse items-center justify-between flex-wrap md:px-40 p-20 md:py-40 bg-[var(--theme-purple-color)] text-white'>
@@ -90,48 +98,36 @@ export default function Homepage() {
             Know more about us
           </Link>
         </div>
-        <div></div>
+        <div className=' h-96'>
+          <img src={cbLogo} alt=""className='w-full h-full'/>
+        </div>
       </div>
       
     </div>
   );
 }
 
-function FeaturedCollection({
-  collection,
-}: {
-  collection: FeaturedCollectionFragment;
-}) {
-  if (!collection) return null;
-  const image = collection?.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
+
 
 function FeaturedCollections({
   collection,
 }: {
   collection: FeaturedCollectionFragment[];
 }) {
-  const colorPallete = [
-    'azure','purple','base','black']
+  const colorPallete = ['azure','purple','base','black']
+  const imagePallete = {
+    sweetners       : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_sugar_cubes_in_a_plain_white_background_no_shadow_for_a_transparent_background_banner_23374-removebg-preview.png?v=1732710792",
+    coffeewares     : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_a_stack_of_coffee_mugs__glasses__jars__a_plain_white_background_for_advertising_banner_or_ed__3_-removebg-preview.png?v=1732710760",
+    coffeepowder    : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_coffee_powder_packets_in_a_plain_white_background_no_shadow_for_a_transparent_background_ban__3_-removebg-preview_e55b5af3-e8e6-4956-9466-4f64c6d87bbd.png?v=1732709289"
+  }
   if (!collection) return null;
   return(
     <div className=' w-full grid grid-cols-2 gap-0'>
       {
         collection?.map((el,k) => {
+          const keyName = el?.title?.replaceAll(' ','')?.toLowerCase()
           const image = el?.image
+          console.log('COLL',el,keyName)
           return(
             <Link
               className={`featured-collection-div h-[60vh] px-40 py-20 flex flex-col items-center text-center text-white 
@@ -139,13 +135,17 @@ function FeaturedCollections({
                 `}
               to={`/collections/${el?.handle}`}
             >
-              <div className=' text-4xl font-bold'>{el?.title}</div>
+              <div className=' text-5xl font-bold'>{el?.title}</div>
               <div className=' text-lg underline font-semibold mb-3'>Shop Now</div>
-              {image && (
+              {image ? 
                 <div className=" h-[30vh]">
                   <Image data={image} className='h-full w-auto'/>
                 </div>
-              )}
+                :
+                <div className=" h-[30vh]">
+                  <img src={imagePallete[`${keyName}`]??''} alt="" className='w-full h-full' />
+                </div>
+              }
             </Link>
           )
         })

@@ -392,7 +392,7 @@ button.reset:hover:not(:has(> *)) {
 .featured-collection img, .featured-collection-div img {
   height: auto;
   max-height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .recommended-products-grid {
