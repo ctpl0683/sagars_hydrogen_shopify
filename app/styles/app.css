@@ -175,7 +175,7 @@ button.reset:hover:not(:has(> *)) {
   /* padding: 0 1rem; */
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   padding-block: 1%;
   @media (max-width: 767px) {
     flex-direction: row;
@@ -376,11 +376,13 @@ button.reset:hover:not(:has(> *)) {
   display: block;
   margin-bottom: 2rem;
   position: relative;
+  background-color: #000;
 }
 .featured-collection-div {
   display: block;
   position: relative;
 }
+
 
 .featured-collection-image {
   aspect-ratio: 1 / 1;
@@ -390,7 +392,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .featured-collection img, .featured-collection-div img {
-  height: auto;
+  width: auto;
   max-height: 100%;
   object-fit: contain;
 }
@@ -406,6 +408,34 @@ button.reset:hover:not(:has(> *)) {
 
 .recommended-product img {
   height: auto;
+}
+
+.collectionTitle{
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+}
+
+.elevateBtn{
+  cursor: pointer;
+  background: #FAED7F;  
+  border-radius: 30px;
+  z-index: 1;
+  position: sticky;
+}
+
+.elevateBtn div{
+  display: block;
+  box-sizing: border-box;
+  padding: 2%;
+  transition: transform 0.1s ease;
+  border-radius: 30px;
+}
+
+.elevateBtn:hover div{
+  transform: translateY(-0.4rem);
+}
+
+.elevateBtn:active div{
+  transform: translateY(0);
 }
 
 /*
@@ -535,4 +565,64 @@ button.reset:hover:not(:has(> *)) {
 
 .account-logout {
   display: inline-block;
+}
+
+/*
+* -----------------------------------------------------
+* Custom Components
+* -----------------------------------------------------
+*/
+.AttentionButton-io-button {
+  background: #160C28;
+  color: #FAED7F;
+  box-shadow: inset 0 0 1.6em -0.6em #160C28;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+}
+
+.AttentionButton-io-button .AttentionButton-io-button-icon {
+  background: #FAED7F;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #160C28;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.AttentionButton-io-button:hover .AttentionButton-io-button-icon {
+  width: calc(100% - 0.6em);
+}
+
+.AttentionButton-io-button .AttentionButton-io-button-icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #160C28;
+}
+
+.AttentionButton-io-button:hover .AttentionButton-io-button-icon svg {
+  transform: translateX(0.1em);
+}
+
+.AttentionButton-io-button:active .AttentionButton-io-button-icon {
+  transform: scale(0.95);
 }

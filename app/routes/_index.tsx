@@ -9,6 +9,8 @@ import type {
 import fingersHoldingBean from '~/assets/BannerAssets/fingers_coffee_bean.png'
 import whyCB from '~/assets/BannerAssets/whyCB.png'
 import cbLogo from '~/assets/LettersLogo.png'
+import AttentionButton from '~/components/AttentionButton';
+import { Sparkles } from 'lucide-react';
 
 export const meta: MetaFunction = () => {
   return [{title: 'CodersBrew'}];
@@ -66,9 +68,13 @@ export default function Homepage() {
         <div className=' flex flex-col items-start justify-start w-[80vw] h-full'>
           <div className=' flex flex-col items-start justify-items-start'>
             <div className=' text-7xl font-extrabold text-white'>Sip into the Season, <br/>One Brew at a Time</div>
-            <div className=' md:max-w-[45rem] text-xl mt-3 text-white'>
+            <div className=' md:max-w-[45rem] text-xl my-3 text-white'>
               Embrace autumn with rich, aromatic blends that warm the soul—perfect for cozy mornings, sharing with friends, and savoring the crisp days of fall.
             </div>
+            <AttentionButton 
+              btnTxt={"Explore our flavours"} btnHref={`/collections/coffee-powder`} size={'1.5rem'}>
+              <Sparkles/>
+            </AttentionButton>
           </div>
         </div>
         <div className=' absolute bottom-0 right-0 h-full'>
@@ -115,11 +121,7 @@ function FeaturedCollections({
   collection: FeaturedCollectionFragment[];
 }) {
   const colorPallete = ['azure','purple','base','black']
-  const imagePallete = {
-    sweetners       : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_sugar_cubes_in_a_plain_white_background_no_shadow_for_a_transparent_background_banner_23374-removebg-preview.png?v=1732710792",
-    coffeewares     : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_a_stack_of_coffee_mugs__glasses__jars__a_plain_white_background_for_advertising_banner_or_ed__3_-removebg-preview.png?v=1732710760",
-    coffeepowder    : "https://cdn.shopify.com/s/files/1/0675/2921/2081/files/Firefly_coffee_powder_packets_in_a_plain_white_background_no_shadow_for_a_transparent_background_ban__3_-removebg-preview_e55b5af3-e8e6-4956-9466-4f64c6d87bbd.png?v=1732709289"
-  }
+  
   if (!collection) return null;
   return(
     <div className=' w-full grid grid-cols-2 gap-0'>
@@ -131,21 +133,20 @@ function FeaturedCollections({
           return(
             <Link
               className={`featured-collection-div h-[60vh] px-40 py-20 flex flex-col items-center text-center text-white 
-                bg-[var(--theme-${colorPallete[k]}-color)] border-none outline-0 mx-[-.2px] my-[-2.5px]
+                bg-[var(--theme-${colorPallete[k]}-color)] border-none outline-0 mx-[-.2px] my-[-2.5px] text-center
                 `}
               to={`/collections/${el?.handle}`}
             >
-              <div className=' text-5xl font-bold'>{el?.title}</div>
-              <div className=' text-lg underline font-semibold mb-3'>Shop Now</div>
-              {image ? 
-                <div className=" h-[30vh]">
-                  <Image data={image} className='h-full w-auto'/>
-                </div>
-                :
-                <div className=" h-[30vh]">
-                  <img src={imagePallete[`${keyName}`]??''} alt="" className='w-full h-full' />
+              <div className=' text-5xl font-bold z-1 sticky text-center w-auto collectionTitle'>{el?.title}</div>
+              
+              {image && 
+                <div className=" h-[30vh] my-4 grid place-content-center">
+                  <Image data={image} className=' h-full'/>
                 </div>
               }
+              <div className={`elevateBtn`}>
+                <div className={` bg-[var(--theme-${colorPallete[k]}-color)]`}>Shop Now</div>
+              </div>
             </Link>
           )
         })

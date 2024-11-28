@@ -180,7 +180,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button onClick={() => open('search')}>
+    <button onClick={(e) =>{ e.preventDefault(); open('search'); }}>
       <Search/>
     </button>
   );
@@ -190,23 +190,6 @@ function CartBadge({count}: {count: number}) {
   const {open} = useAside();
   const {publish, shop, cart, prevCart} = useAnalytics();
 
-  // return (
-  //   <a
-  //     href="/cart"
-  //     onClick={(e) => {
-  //       e.preventDefault();
-  //       open('cart');
-  //       publish('cart_viewed', {
-  //         cart,
-  //         prevCart,
-  //         shop,
-  //         url: window.location.href || '',
-  //       } as CartViewPayload);
-  //     }}
-  //   >
-  //     Cart {count}
-  //   </a>
-  // );
   return (
     <div
       onClick={(e) => {
