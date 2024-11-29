@@ -132,7 +132,7 @@ function FeaturedCollections({
           console.log('COLL',el,keyName)
           return(
             <Link
-              className={`featured-collection-div h-[60vh] px-40 py-20 flex flex-col items-center text-center text-white 
+              className={`featured-collection-div h-[70vh] px-40 py-20 flex flex-col items-center justify-center gap-4 text-center text-white 
                 bg-[var(--theme-${colorPallete[k]}-color)] border-none outline-0 mx-[-.2px] my-[-2.5px] text-center
                 `}
               to={`/collections/${el?.handle}`}
@@ -144,8 +144,8 @@ function FeaturedCollections({
                   <Image data={image} className=' h-full'/>
                 </div>
               }
-              <div className={`elevateBtn`}>
-                <div className={` bg-[var(--theme-${colorPallete[k]}-color)]`}>Shop Now</div>
+              <div className={`elevateBtn w-full`}>
+                <div className={` w-full bg-[var(--theme-${colorPallete[k]}-color)]`}>Shop Now</div>
               </div>
             </Link>
           )

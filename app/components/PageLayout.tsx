@@ -94,10 +94,9 @@ function MobileMenuAside({
 
 function SearchAside() {
   return (
-    <Aside type="search" heading="SEARCH">
+    <Aside type="search" cls="searchAside">
       <div className="predictive-search">
-        <br />
-        <SearchFormPredictive>
+        <SearchFormPredictive className='w-full searchDivCont'>
           {({fetchResults, goToSearch, inputRef}) => (
             <>
               <input
