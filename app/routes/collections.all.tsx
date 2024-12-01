@@ -53,6 +53,19 @@ export default function Collection() {
   return (
     <div className="collection mx-32">
       <div className='w-full text-center py-10 text-3xl font-bold'>All Products</div>
+      <div>
+        <div>Filter</div>
+        <div>
+          <div className='flex flex-row items-center justify-between'>
+            <div>
+              <input type="text" name="" id="" />
+            </div>
+            <div>
+              <input type="text" name="" id="" />
+            </div>
+          </div>
+        </div>
+      </div>
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -80,7 +93,7 @@ function ProductItem({
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="flex flex-col justify-between w-60"
+      className="flex flex-col justify-between w-60 border-4 border-[var(--theme-base-color)] hover:bg-[var(--theme-accent-color)] p-4 rounded-xl group"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -92,6 +105,7 @@ function ProductItem({
           data={product.featuredImage}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
+          className='group-hover:scale-125'
         />
       )}
       <h4>{product.title}</h4>

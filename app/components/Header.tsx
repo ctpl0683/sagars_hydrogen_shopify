@@ -94,7 +94,7 @@ export function HeaderMenu({
         return (
           <>
             <NavLink
-            className="header-menu-item relative group"
+            className="header-menu-item relative group outline-0 "
             end
             key={item.id}
             onClick={closeAside}
@@ -106,7 +106,7 @@ export function HeaderMenu({
             {item?.items?.length>0 && 
               <>
                 <ChevronDown/>
-                <div className='hidden group-hover:flex flex-col items-start justify-between absolute top-full bg-[var(--theme-accent-color)] text-[var(--theme-base-color)] p-5 gap-1'>
+                <div className=' hidden group-hover:flex flex-col items-start justify-between absolute top-full bg-[var(--theme-accent-color)] text-[var(--theme-base-color)] p-5 gap-1'>
                   {item?.items?.map((el:any) => {
                     let url2 =
                     el?.url.includes('myshopify.com') ||
@@ -115,7 +115,7 @@ export function HeaderMenu({
                       ? new URL(el?.url).pathname
                       : el?.url;
                     return(
-                      <NavLink key={el?.id} to={url2} className=' text-nowrap '>
+                    <NavLink key={el?.id} to={url2} className=' text-nowrap '>
                       {el?.title}
                     </NavLink>
                     )
@@ -180,7 +180,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button onClick={(e) =>{ e.preventDefault(); open('search'); }}>
+    <button className=' cursor-pointer' onClick={(e) =>{ e.preventDefault(); open('search'); }}>
       <Search/>
     </button>
   );
@@ -202,7 +202,7 @@ function CartBadge({count}: {count: number}) {
           url: window.location.href || '',
         } as CartViewPayload);
       }}
-      className='grid place-content-center relative'
+      className='grid place-content-center relative cursor-pointer  '
     >
       <ShoppingCart/> 
       {count === null ? <span>&nbsp;</span> : 

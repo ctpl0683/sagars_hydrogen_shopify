@@ -53,15 +53,15 @@ function CartEmpty({
 }) {
   const {close} = useAside();
   return (
-    <div hidden={hidden}>
-      <br />
+    <div hidden={hidden} className='flex flex-row items-center justify-between py-10'>
       <p>
         Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
         started!
       </p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
+      <Link to="/collections" onClick={close} prefetch="viewport" 
+      className=' bg-[var(--theme-base-color)] text-[var(--theme-accent-color)] rounded-xl p-4 font-extrabold hover:bg-[var(--theme-accent-color)] hover:text-[var(--theme-base-color)] border-4 border-[var(--theme-base-color)]'>
+        Continue shopping
       </Link>
     </div>
   );

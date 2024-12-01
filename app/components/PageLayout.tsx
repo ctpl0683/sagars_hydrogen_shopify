@@ -11,6 +11,7 @@ import {Header, HeaderMenu} from '~/components/Header';
 import {CartMain} from '~/components/CartMain';
 import { SEARCH_ENDPOINT, SearchFormPredictive } from './SearchFormPredictive';
 import { SearchResultsPredictive } from './SearchResultsPredictive';
+import { Search } from 'lucide-react';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -58,7 +59,7 @@ export function PageLayout({
 
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   return (
-    <Aside type="cart" heading="CART">
+    <Aside type="cart" heading="CART" cls='cartAside'>
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
@@ -106,9 +107,12 @@ function SearchAside() {
                 placeholder="Search"
                 ref={inputRef}
                 type="search"
+                className='searchAsideInput placeholder:white text-[var(--theme-base-color)] outline-0'
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
+              <button className='grid place-content-center bg-[var(--theme-base-color)] rounded-xl cursor-pointer p-2 border-4 border-[var(--theme-base-color)] text-[var(--theme-accent-color)] hover:bg-[var(--theme-accent-color)] hover:text-[var(--theme-base-color)]' onClick={goToSearch}>
+                <Search className=' font-extrabold'/>
+              </button>
             </>
           )}
         </SearchFormPredictive>
@@ -132,7 +136,7 @@ function SearchAside() {
                   //queriesDatalistId={inputRef?.current?.value}
                   inputRef={inputRef}
                 />
-                <SearchResultsPredictive.Products
+                {/* <SearchResultsPredictive.Products
                   products={products}
                   closeSearch={closeSearch}
                   term={term}
@@ -151,15 +155,14 @@ function SearchAside() {
                   articles={articles}
                   closeSearch={closeSearch}
                   term={term}
-                />
+                /> */}
                 {term.current && total ? (
                   <Link
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
                   >
-                    <p>
+                    <p className='border-b-2 border-black'>
                       View all results for <q>{term.current}</q>
-                      &nbsp; →
                     </p>
                   </Link>
                 ) : null}
