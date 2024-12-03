@@ -68,9 +68,18 @@ export function links() {
     {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=Slackey&display=swap'
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css'
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css'
     }
   ];
 }
+
 
 export async function loader({context}: LoaderFunctionArgs) {
   const {storefront, customerAccount, cart, env} = context;

@@ -1,9 +1,10 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, Link, type MetaFunction, useNavigate} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import { useState } from 'react';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `CodersBrew | Shop`}];
@@ -25,19 +26,45 @@ export async function loader(args: LoaderFunctionArgs) {
  */
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   const {storefront} = context;
+  const url = new URL(request.url);
+
+  // Get price filter values from query parameters
+  const minPrice = url.searchParams.get('minPrice');
+  const maxPrice = url.searchParams.get('maxPrice');
+
+  // Construct the query filter
+  let queryFilter = '';
+  if (minPrice && maxPrice) {
+    queryFilter = `variants.price:>=${minPrice} variants.price:<=${maxPrice}`;
+  } else if (minPrice) {
+    queryFilter = `variants.price:>=${minPrice}`;
+  } else if (maxPrice) {
+    queryFilter = `variants.price:<=${maxPrice}`;
+  }
+
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
 
   const [{products}] = await Promise.all([
-    storefront.query(CATALOG_QUERY, {
-      variables: {...paginationVariables},
+    storefront.query( queryFilter!=='' ? CATALOG_QUERY_Price_Filter : CATALOG_QUERY, 
+    queryFilter!=='' ?
+    {
+      variables: {
+        ...paginationVariables,
+        "query" : queryFilter
+      },
+    }
+    :
+    {
+      variables: {
+        ...paginationVariables
+      },
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
-  return {products};
-}
 
+  return {products, minPrice, maxPrice};
+}
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
  * fetched after the initial page load. If it's unavailable, the page should still 200.
@@ -48,7 +75,17 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const {products} = useLoaderData<typeof loader>();
+  const {products, minPrice: initialMinPrice, maxPrice: initialMaxPrice} = useLoaderData<typeof loader>();
+  const [minPrice, setMinPrice] = useState(initialMinPrice || '');
+  const [maxPrice, setMaxPrice] = useState(initialMaxPrice || '');
+  const navigate = useNavigate();
+
+  const applyFilters = () => {
+    const params = new URLSearchParams();
+    if (minPrice) params.set('minPrice', minPrice);
+    if (maxPrice) params.set('maxPrice', maxPrice);
+    navigate(`?${params.toString()}`);
+  };
 
   return (
     <div className="collection mx-32">
@@ -56,13 +93,24 @@ export default function Collection() {
       <div>
         <div>Filter</div>
         <div>
-          <div className='flex flex-row items-center justify-between'>
+          <div className="flex flex-row items-center justify-between">
             <div>
-              <input type="text" name="" id="" />
+              <input
+                type="text"
+                placeholder="Min Price"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
             </div>
             <div>
-              <input type="text" name="" id="" />
+              <input
+                type="text"
+                placeholder="Max Price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
             </div>
+            <button onClick={applyFilters}>Apply</button>
           </div>
         </div>
       </div>
@@ -72,7 +120,7 @@ export default function Collection() {
       >
         {({node: product, index}) => (
           <ProductItem
-            key={product.id}
+            key={index}
             product={product}
             loading={index < 8 ? 'eager' : undefined}
           />
@@ -86,7 +134,7 @@ function ProductItem({
   product,
   loading,
 }: {
-  product: ProductItemFragment;
+  product: ProductItemFragment | any;
   loading?: 'eager' | 'lazy';
 }) {
   const variant = product.variants.nodes[0];
@@ -133,10 +181,10 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       height
     }
     priceRange {
-      minVariantPrice {
+      maxVariantPrice {
         ...MoneyProductItem
       }
-      maxVariantPrice {
+      minVariantPrice {
         ...MoneyProductItem
       }
     }
@@ -161,7 +209,43 @@ const CATALOG_QUERY = `#graphql
     $startCursor: String
     $endCursor: String
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+    products(
+      first: $first,
+      last: $last,
+      before: $startCursor,
+      after: $endCursor,
+    ) {
+      nodes {
+        ...ProductItem
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+  ${PRODUCT_ITEM_FRAGMENT}
+` as const;
+
+const CATALOG_QUERY_Price_Filter = `#graphql
+  query Catalog_Price_Filter(
+    $country: CountryCode
+    $language: LanguageCode
+    $first: Int
+    $last: Int
+    $startCursor: String
+    $endCursor: String
+    $query: String
+  ) @inContext(country: $country, language: $language) {
+    products(
+      first: $first,
+      last: $last,
+      before: $startCursor,
+      after: $endCursor,
+      query: $query
+    ) {
       nodes {
         ...ProductItem
       }

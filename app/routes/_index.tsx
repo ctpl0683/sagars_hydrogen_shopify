@@ -11,6 +11,7 @@ import whyCB from '~/assets/BannerAssets/whyCB.png'
 import cbLogo from '~/assets/LettersLogo.png'
 import AttentionButton from '~/components/AttentionButton';
 import { Sparkles } from 'lucide-react';
+import ReviewSlider from '~/components/ReviewSlider';
 
 export const meta: MetaFunction = () => {
   return [{title: 'CodersBrew'}];
@@ -62,6 +63,17 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
+  const reviews = [
+    { img:'', name:'Emily R., Software Engineer', cmt: 'The flavored coffee powders from CodersBrew are a game-changer! I never imagined my mornings could be this flavorful and refreshing. Their French Vanilla blend is now a staple in my daily routine!' },
+    { img:'', name:'David M., Full-Stack Developer', cmt: 'As a coder, I need a consistent energy boost, and CodersBrew delivers every time. Their subscription model ensures I never run out of my favorite Hazelnut coffee. Highly recommend!' },
+    { img:'', name:'Sophia K., Digital Marketer', cmt: 'I love their innovative sweeteners! They’re perfect for keeping my coffee guilt-free yet delicious. The packaging is amazing, and the quality speaks for itself.' },
+    { img:'', name:'Jake T., UI/UX Designer', cmt: 'CodersBrew mugs are not only sleek but also the perfect size for my endless coffee refills during late-night coding sessions. This store truly understands the needs of coffee-loving coders!' },
+    { img:'', name:'Nina H., AI Researcher', cmt: 'The subscription service is a lifesaver! I love trying a new flavor every month, and the caramel mocha flavor is hands down my favorite. CodersBrew keeps my coffee corner exciting!' },
+    { img:'', name:'Liam P., Freelance Coder', cmt: 'I’ve tried many coffee brands, but CodersBrew stands out for its rich flavors and top-notch quality. The coconut-infused coffee powder has won me over. Excellent service, too!' },
+    { img:'', name:'Olivia S., Mobile App Developer', cmt: 'Every product from CodersBrew screams perfection. Their coffee powders, mugs, and even the packaging make for an unbeatable experience. My workspace is now a coffee-lover’s paradise!' }
+  ]
+
   return (
     <div className="home">
       <div className=' bg-[var(--theme-base-color)] h-[40rem] w-full grid place-content-center relative'>
@@ -107,6 +119,26 @@ export default function Homepage() {
         <div className=' h-96'>
           <img src={cbLogo} alt=""className='w-full h-full'/>
         </div>
+      </div>
+      <div className='w-full grid place-content-center py-20'>
+        
+        <ReviewSlider>
+          {
+            reviews?.map(el =>{
+              return(
+                <div className='flex flex-row flex-wrap items-start justify-between p-5 border rounded-lg w-[40vw] mx-4'>
+                  <div className='flex flex-col items-start justify-between'>
+                    <div className=' rounded-full h-20 w-20 bg-amber-950 '></div>
+                    <div className=' text-sm font-bold'>{el?.name}</div>
+                  </div>
+                  <div className=' p-2 '>
+                    {el?.cmt}
+                  </div>
+                </div>
+              )
+            })
+          }
+        </ReviewSlider>
       </div>
       
     </div>
